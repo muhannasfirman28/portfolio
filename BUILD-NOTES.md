@@ -1064,3 +1064,56 @@ Skrip di `%TEMP%\build-assets\` (butuh Python 3 + Pillow + numpy, jalankan denga
 `rebuild.py` menyusun ulang `index.html` dari nol dari sumber asli — **jangan**
 dijalankan lagi setelah patch manual (akan menghapus perbaikan `data:` guard,
 favicon, dan semua foto).
+
+### 18. Entri showcase SMK Pelayaran
+
+Proyek `Ridho-arachman/smk-pelayaran` (Laravel 12 + Filament 3) diunduh sebagai
+zip, diekstrak ke `C:\laragon\www\smk-pelayaran`, lalu dijalankan secara lokal:
+MySQL Laragon, DB `smk_pelayaran`, `.env` + `key:generate`, `composer install`,
+`npm.cmd install`, `migrate --seed`, `storage:link`, `npm.cmd run build`, dan
+`php artisan serve --port=8000`. Empat data PPDB contoh ditambahkan hanya di DB
+lokal agar tabel admin tidak kosong saat difoto.
+
+| Bagian | Perubahan |
+|---|---|
+| `SHOWCASE` | entri baru `smk-pelayaran` (type `project`, tahun `2025`, `href` ke repo asli) |
+| `I18N.en/id.showcase.cards` | kunci `smk-pelayaran`: judul, meta, deskripsi, 8 fitur, stack, peran, 4 alt screenshot |
+| `PROJECT_IMAGES` | kunci `smkPelayaran` berisi 4 screenshot data-URI WebP |
+
+Screenshot diambil dari halaman utama (1), form PPDB (2), dashboard admin (3),
+dan tabel PPDB Filament (4) lewat Playwright pada viewport 1440×900. File PNG
+mentah dikonversi ke WebP lalu dikhilangkan ke lebar 900 px (q72) dan ditanam
+sebagai data URI — **tidak ada file gambar eksternal baru**, sehingga sifat
+single-file `index.html` tetap terjaga. Ukuran `index.html` naik dari ~1,34 MB
+ke ~1,61 MB.
+
+Verifikasi: halaman porto di `http://127.0.0.1:8137/` dimuat tanpa console error;
+kartu baru tampil di filter `projects`; judul/deskripsi benar di mode `en` dan
+`id`; keempat data URI berhasil di-decode sebagai gambar 900 px.
+
+### 19. Entri showcase Web Kelurahan Panggungjati
+
+Proyek `Ridho-arachman/web-desa-panggungjati` diunduh sebagai zip, diekstrak ke
+`C:\laragon\www\web-desa-panggungjati`, lalu dijalankan lokal: DB MySQL `web_desa`,
+`.env` + `key:generate`, `composer install`, `npm.cmd install`, `migrate`,
+`storage:link`, `npm.cmd run build`, dan `php artisan serve --port=8001`.
+
+Catatan: `composer.json`/lock repo ini memakai Laravel 13.12 + Filament 5.6.6 +
+PHP ^8.3 (README masih menampilkan badge lama Laravel 11/Filament 3). Layout
+publiknya juga hardcode nama aset build lama (`app-DwAU_20J.css`, `app.js`),
+sehingga secara lokal nama file hasil `vite build` disalin ke nama tersebut agar
+CSS termuat saat screenshot — ini **hanya perbaikan lokal**, bukan perubahan source.
+
+Data demo sementara (4 berita published, 6 jenis surat, 5 pengurus, setting,
+3 masukan, 1 admin Filament) ditambahkan hanya di DB lokal agar tampilan tidak
+kosong. Screenshot: homepage (1), layanan surat (2), struktur organisasi (3),
+dan dashboard admin (4).
+
+| Bagian | Perubahan |
+|---|---|
+| `SHOWCASE` | entri baru `web-desa-panggungjati` (type `project`, tahun `2026`, `href` ke repo asli) |
+| `I18N.en/id.showcase.cards` | kunci `web-desa-panggungjati`: judul, meta, deskripsi, 8 fitur, stack, peran, 4 alt screenshot |
+| `PROJECT_IMAGES` | kunci `desaPanggungjati` berisi 4 screenshot data-URI WebP |
+
+Screenshot diproses seperti entri SMK: PNG → WebP lebar 900 px (q72) → data URI.
+Tidak ada file gambar eksternal baru; `index.html` naik dari ~1,61 MB ke ~1,81 MB.
